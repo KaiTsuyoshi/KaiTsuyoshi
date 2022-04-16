@@ -36,3 +36,9 @@ I am a data science major at the University of Wisconsin - Madison
 Here is a visualization of a PCA pair plot that shows the correlation of two predictors x1 and x2 in relation to y. From this we can conclude that the relationships that exist between x1 and y, x2 and y, x1 and x2, and vice versa for each are all very tightly correlated, which could be applied to something such as x1 being height of an individual, x2 being the weight, and the response y being blood pressure. 
 
 This is significantly important because a problem arises where x1 and x2, as previously mentioned, follow close colinearity, which results in different coefficient choices producing vastly different conclusions that must blame one predictor or the other. Thus, when conducting further statistical techniques, larger and larger errors become prevalent, and produce mistaken conclusions. In short, this graphic showcases the warning sign of correlated predictors.
+
+
+
+<img src="./readmeimg2.png" width="600" height="450"/>
+
+The above is a residual vs leverage graphic of a fitted linear regression of mph to horsepower in the Auto dataset of the ISLR library, where Cook's distances are plotted to identify points of influence, those sometimes being outliers, although not necessarily. Here, there are only two points with high leverage, although not in any extremity, as the point of the visual was originally inteded to confirm that there were no outliers or funky data in the dataset. 

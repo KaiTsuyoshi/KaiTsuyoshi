@@ -6,7 +6,7 @@
 ## Hey, I'm Kai! 🙋🏻‍♂️
 
 I am a data science major at the University of Wisconsin - Madison
- - 🖥 Minor in computer science
+ - 🖥 Minor in economic analysis
  - 📈 Experience in data visualization
  - 🌱 Enjoy manipulating and creating graphics from random data
  - 📊 Advanced level of data analysis

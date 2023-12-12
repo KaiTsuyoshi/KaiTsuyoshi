@@ -1,0 +1,18 @@
+﻿{
+  "TeamID": 2,
+  "TeamName": "Heat",
+  "League": "NBA",
+  "TeamLocation": "Miami",
+  "TeamMascot": "Burnie",
+  "Players": ["Jimmy Butler", "Lebron James", "Dwayne Wade"]
+}
+
+
+{
+  "TeamID": 1,
+  "TeamName": "Celtics",
+  "League": "NBA",
+  "TeamLocation": "Boston",
+  "TeamMascot": "Leprechaun",
+  "Players": ["Jayson Tatum", "Jaylen Brown", "Tingus Pingus"]
+}

@@ -1,0 +1,26 @@
+﻿{
+ LeagueId:1,
+ League: "NFL",
+ ProStatus: "Yes",
+ StartDate: "09/01",
+ EndDate: "02/01",
+ Team1: {Name: "Packers", Location: "Green Bay", Mascot: "Cheese Head"},
+ Team2: {Name: "Cowboys", Location: "Dallas", Mascot: "Rowdy"},
+ Team3: {Name: "Bears", Location: "Chicago", Mascot: "Staley The Bear"}
+}
+
+
+
+
+
+
+{
+ LeagueId:2,
+ League: "MLB",
+ ProStatus: "Yes",
+ StartDate: "04/01",
+ EndDate: "10/01",
+ Team1: {Name: "Brewers", Location: "Milwaukee", Mascot: "Bernie"},
+ Team2: {Name: "Yankees", Location: "New York", Mascot: "Dandy"},
+ Team3: {Name: "Mets", Location: "New York", Mascot: "Mr. Met"}
+}

@@ -1,0 +1,88 @@
+                                                       ___  ____  ____  ____  ____(R)
+                                                      /__    /   ____/   /   ____/   
+                                                     ___/   /   /___/   /   /___/    
+                                                       Statistics/Data analysis      
+      
+      
+     1 . do "/var/folders/qx/w74_v_mx4xxfmcnj1kx6_g380000gn/T//SD09049.000000"
+      
+     2 . display "Kai Tsuyoshi"
+      Kai Tsuyoshi
+      
+     3 . 
+     4 . use https://users.ssc.wisc.edu/~mckelvey/ec400/gss2016 
+      (Source: 2016 General Social Survey)
+      
+     5 . 
+     6 . describe
+      
+      Contains data from https://users.ssc.wisc.edu/~mckelvey/ec400/gss2016.dta
+       Observations:         1,893                  Source: 2016 General Social Survey
+          Variables:             4                  25 Sep 2018 17:58
+      -----------------------------------------------------------------------------------------------
+      Variable      Storage   Display    Value
+          name         type    format    label      Variable label
+      -----------------------------------------------------------------------------------------------
+      educ            byte    %8.0g      LABAF      highest year of school completed
+      maeduc          byte    %8.0g      LABAF      highest year school completed, mother
+      paeduc          byte    %8.0g      LABAF      highest year school completed, father
+      zodiac          byte    %8.0g      ZODIAC     respondents astrological sign
+      -----------------------------------------------------------------------------------------------
+      Sorted by: 
+      
+     7 . 
+     8 . regress educ maeduc paeduc, robust
+      
+      Linear regression                               Number of obs     =      1,893
+                                                      F(2, 1890)        =     163.73
+                                                      Prob > F          =     0.0000
+                                                      R-squared         =     0.1988
+                                                      Root MSE          =     2.6274
+      
+      ------------------------------------------------------------------------------
+                   |               Robust
+              educ | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+      -------------+----------------------------------------------------------------
+            maeduc |   .1623587   .0241545     6.72   0.000     .1149865    .2097309
+            paeduc |   .2043167   .0203338    10.05   0.000     .1644378    .2441957
+             _cons |   9.813727   .2697223    36.38   0.000     9.284742    10.34271
+      ------------------------------------------------------------------------------
+      
+     9 . 
+    10 . regress educ maeduc, robust
+      
+      Linear regression                               Number of obs     =      1,893
+                                                      F(1, 1891)        =     237.35
+                                                      Prob > F          =     0.0000
+                                                      R-squared         =     0.1572
+                                                      Root MSE          =     2.6941
+      
+      ------------------------------------------------------------------------------
+                   |               Robust
+              educ | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+      -------------+----------------------------------------------------------------
+            maeduc |   .3171007   .0205829    15.41   0.000     .2767331    .3574683
+             _cons |   10.38986   .2645532    39.27   0.000     9.871017    10.90871
+      ------------------------------------------------------------------------------
+      
+    11 . 
+    12 . regress educ maeduc paeduc zodiac, robust
+      
+      Linear regression                               Number of obs     =      1,893
+                                                      F(3, 1889)        =     109.20
+                                                      Prob > F          =     0.0000
+                                                      R-squared         =     0.1989
+                                                      Root MSE          =     2.6281
+      
+      ------------------------------------------------------------------------------
+                   |               Robust
+              educ | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+      -------------+----------------------------------------------------------------
+            maeduc |   .1624652    .024162     6.72   0.000     .1150782    .2098523
+            paeduc |   .2042695   .0203412    10.04   0.000     .1643759    .2441632
+            zodiac |   .0058371   .0179733     0.32   0.745    -.0294126    .0410867
+             _cons |   9.775866   .2973056    32.88   0.000     9.192784    10.35895
+      ------------------------------------------------------------------------------
+      
+    13 . 
+    14 . translate @Results Pset4.txt

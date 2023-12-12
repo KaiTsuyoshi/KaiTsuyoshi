@@ -1,0 +1,71 @@
+                                                       ___  ____  ____  ____  ____(R)
+                                                      /__    /   ____/   /   ____/   
+                                                     ___/   /   /___/   /   /___/    
+                                                       Statistics/Data analysis      
+      
+      
+     1 . display "Kai Tsuyoshi - Problem set 1"
+      Kai Tsuyoshi - Problem set 1
+      
+     2 . 
+     3 . use https://users.ssc.wisc.edu/~mckelvey/ec410/pcsales.dta
+      
+     4 . 
+     5 . describe
+      
+      Contains data from https://users.ssc.wisc.edu/~mckelvey/ec410/pcsales.dta
+       Observations:            12                  
+          Variables:             7                  25 Sep 2011 21:05
+      ------------------------------------------------------------------------------
+      Variable      Storage   Display    Value
+          name         type    format    label      Variable label
+      ------------------------------------------------------------------------------
+      sales           float   %9.0g                 Number of Sales
+      price           float   %9.0g                 Price (thousands of dollars)
+      income          float   %9.0g                 Income (millions of dollars)
+      comp            float   %9.0g                 Competitor's Price (thousands of
+                                                      dollars)
+      totadexp        float   %9.0g                 Total Advertising Expenditure
+                                                      (thousands of dollars)
+      tvadexp         float   %9.0g                 TV Advertising Expenditure
+                                                      (thousands of dollars)
+      radioadexp      float   %9.0g                 Radio Advertising Expenditure
+                                                      (thousands of dollars)
+      ------------------------------------------------------------------------------
+      Sorted by: 
+      
+     6 . 
+     7 . summarize totadexp, detail
+      
+               Total Advertising Expenditure (thousands of
+                                dollars)
+      -------------------------------------------------------------
+            Percentiles      Smallest
+       1%         55.9           55.9
+       5%         55.9           56.7
+      10%         56.7           59.7       Obs                  12
+      25%         61.2           62.7       Sum of wgt.          12
+      
+      50%         67.1                      Mean           65.96667
+                              Largest       Std. dev.      6.282346
+      75%         70.9           69.4
+      90%         73.4           72.4       Variance       39.46787
+      95%         74.1           73.4       Skewness      -.3048425
+      99%         74.1           74.1       Kurtosis       1.831267
+      
+     8 . 
+     9 . correlate sales price
+      (obs=12)
+      
+                   |    sales    price
+      -------------+------------------
+             sales |   1.0000
+             price |  -0.8494   1.0000
+      
+      
+    10 . 
+    11 . scatter sales price
+      
+    12 . 
+    13 . 
+    14 . translate @Results Pset1.txt, replace

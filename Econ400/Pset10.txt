@@ -1,0 +1,58 @@
+                                                       ___  ____  ____  ____  ____(R)
+                                                      /__    /   ____/   /   ____/   
+                                                     ___/   /   /___/   /   /___/    
+                                                       Statistics/Data analysis      
+      
+      
+     1 . do "/Users/kaitsuyoshi/Desktop/Econ400/pset10dofile.do"
+      
+     2 . display "Kai Tsuyoshi"
+      Kai Tsuyoshi
+      
+     3 . 
+     4 . use https://users.ssc.wisc.edu/~mckelvey/ec400/microfinance, clear
+      
+     5 . 
+     6 . generate eligible = hhland < 50
+      
+     7 . 
+     8 . regress exptot eligible if yr98 == 1, robust
+      
+      Linear regression                               Number of obs     =        826
+                                                      F(1, 824)         =      18.10
+                                                      Prob > F          =     0.0000
+                                                      R-squared         =     0.0275
+                                                      Root MSE          =     4344.8
+      
+      ------------------------------------------------------------------------------
+                   |               Robust
+            exptot | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+      -------------+----------------------------------------------------------------
+          eligible |  -1613.684    379.258    -4.25   0.000    -2358.109   -869.2581
+             _cons |   6705.507   343.5047    19.52   0.000      6031.26    7379.754
+      ------------------------------------------------------------------------------
+      
+     9 . 
+    10 . generate treatment_interaction = yr98 * eligible
+      
+    11 . 
+    12 . regress exptot eligible yr98 treatment_interaction, robust
+      
+      Linear regression                               Number of obs     =      1,652
+                                                      F(3, 1648)        =      46.57
+                                                      Prob > F          =     0.0000
+                                                      R-squared         =     0.0729
+                                                      Root MSE          =     3410.1
+      
+      ---------------------------------------------------------------------------------------
+                            |               Robust
+                     exptot | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+      ----------------------+----------------------------------------------------------------
+                   eligible |  -1249.595   197.9295    -6.31   0.000    -1637.815   -861.3752
+                       yr98 |   1660.428   390.5436     4.25   0.000     894.4139    2426.442
+      treatment_interaction |  -364.0884   427.7998    -0.85   0.395    -1203.177    475.0001
+                      _cons |   5045.079   185.8195    27.15   0.000     4680.612    5409.546
+      ---------------------------------------------------------------------------------------
+      
+    13 . 
+    14 . translate @Results Pset10.txt

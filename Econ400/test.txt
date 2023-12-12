@@ -1,0 +1,130 @@
+                                                       ___  ____  ____  ____  ____(R)
+                                                      /__    /   ____/   /   ____/   
+                                                     ___/   /   /___/   /   /___/    
+                                                       Statistics/Data analysis      
+      
+      
+        ___  ____  ____  ____  ____ ®
+       /__    /   ____/   /   ____/      17.0
+      ___/   /   /___/   /   /___/       SE—Standard Edition
+      
+       Statistics and Data Science       Copyright 1985-2021 StataCorp LLC
+                                         StataCorp
+                                         4905 Lakeway Drive
+                                         College Station, Texas 77845 USA
+                                         800-STATA-PC        https://www.stata.com
+                                         979-696-4600        stata@stata.com
+      
+      Stata license: Unlimited-user network, expiring 23 Oct 2023
+      Serial number: 401709300925
+        Licensed to: Kai Tsuyoshi
+                     
+      
+      Notes:
+            1. Unicode is supported; see help unicode_advice.
+            2. Maximum number of variables is set to 5,000 but can be increased; see help
+                set_maxvar.
+      
+     1 . display "Kai Tsuyoshi"
+      Kai Tsuyoshi
+      
+     2 . use http://www.stata-press.com/data/r9/auto, clear
+      (1978 Automobile Data)
+      
+     3 . describe
+      
+      Contains data from http://www.stata-press.com/data/r9/auto.dta
+       Observations:            74                  1978 Automobile Data
+          Variables:            12                  13 Apr 2005 17:45
+                                                    (_dta has notes)
+      -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+      Variable      Storage   Display    Value
+          name         type    format    label      Variable label
+      -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+      make            str18   %-18s                 Make and Model
+      price           int     %8.0gc                Price
+      mpg             int     %8.0g                 Mileage (mpg)
+      rep78           int     %8.0g                 Repair Record 1978
+      headroom        float   %6.1f                 Headroom (in.)
+      trunk           int     %8.0g                 Trunk space (cu. ft.)
+      weight          int     %8.0gc                Weight (lbs.)
+      length          int     %8.0g                 Length (in.)
+      turn            int     %8.0g                 Turn Circle (ft.)
+      displacement    int     %8.0g                 Displacement (cu. in.)
+      gear_ratio      float   %6.2f                 Gear Ratio
+      foreign         byte    %8.0g      origin     Car type
+      -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+      Sorted by: foreign
+      
+     4 . browse
+      
+     5 . summarize trunk
+      
+          Variable |        Obs        Mean    Std. dev.       Min        Max
+      -------------+---------------------------------------------------------
+             trunk |         74    13.75676    4.277404          5         23
+      
+     6 . summarize trunk, detail
+      
+                          Trunk space (cu. ft.)
+      -------------------------------------------------------------
+            Percentiles      Smallest
+       1%            5              5
+       5%            7              6
+      10%            8              7       Obs                  74
+      25%           10              7       Sum of wgt.          74
+      
+      50%           14                      Mean           13.75676
+                              Largest       Std. dev.      4.277404
+      75%           17             21
+      90%           20             21       Variance       18.29619
+      95%           21             22       Skewness       .0292034
+      99%           23             23       Kurtosis       2.192052
+      
+     7 . tabulate trunk
+      
+      Trunk space |
+        (cu. ft.) |      Freq.     Percent        Cum.
+      ------------+-----------------------------------
+                5 |          1        1.35        1.35
+                6 |          1        1.35        2.70
+                7 |          3        4.05        6.76
+                8 |          5        6.76       13.51
+                9 |          4        5.41       18.92
+               10 |          5        6.76       25.68
+               11 |          8       10.81       36.49
+               12 |          3        4.05       40.54
+               13 |          4        5.41       45.95
+               14 |          4        5.41       51.35
+               15 |          5        6.76       58.11
+               16 |         12       16.22       74.32
+               17 |          8       10.81       85.14
+               18 |          1        1.35       86.49
+               20 |          6        8.11       94.59
+               21 |          2        2.70       97.30
+               22 |          1        1.35       98.65
+               23 |          1        1.35      100.00
+      ------------+-----------------------------------
+            Total |         74      100.00
+      
+     8 . ci means price, level(98)
+      
+          Variable |        Obs        Mean    Std. err.       [98% conf. interval]
+      -------------+---------------------------------------------------------------
+             price |         74    6165.257    342.8719        5349.728    6980.785
+      
+     9 . correlate price trunk
+      (obs=74)
+      
+                   |    price    trunk
+      -------------+------------------
+             price |   1.0000
+             trunk |   0.3143   1.0000
+      
+      
+    10 . scatter price trunk
+      
+    11 . cd "/Users/kaitsuyoshi/Desktop/Econ400"
+      /Users/kaitsuyoshi/Desktop/Econ400
+      
+    12 . translate @Results test.txt

@@ -1,0 +1,161 @@
+                                                       ___  ____  ____  ____  ____(R)
+                                                      /__    /   ____/   /   ____/   
+                                                     ___/   /   /___/   /   /___/    
+                                                       Statistics/Data analysis      
+      
+      
+     1 . do "/var/folders/qx/w74_v_mx4xxfmcnj1kx6_g380000gn/T//SD30867.000000"
+      
+     2 . display "Kai Tsuyoshi" 
+      Kai Tsuyoshi
+      
+     3 . 
+     4 . use https://users.ssc.wisc.edu/~mckelvey/ec400/hprice,clear
+      (Source: Wooldridge, 6th Edition)
+      
+     5 . 
+     6 . describe
+      
+      Contains data from https://users.ssc.wisc.edu/~mckelvey/ec400/hprice.dta
+       Observations:            88                  Source: Wooldridge, 6th Edition
+          Variables:             6                  9 Oct 2018 22:18
+      -----------------------------------------------------------------------------------------------
+      Variable      Storage   Display    Value
+          name         type    format    label      Variable label
+      -----------------------------------------------------------------------------------------------
+      price           float   %9.0g                 house price, $1000s
+      assess          float   %9.0g                 assessed value, $1000s
+      bdrms           byte    %9.0g                 number of bdrms
+      lotsize         float   %9.0g                 size of lot in square feet
+      sqrft           int     %9.0g                 size of house in square feet
+      colonial        byte    %9.0g                 =1 if home is colonial style
+      -----------------------------------------------------------------------------------------------
+      Sorted by: 
+      
+     7 . 
+     8 . generate natlogprice = ln(price)
+      
+     9 . 
+    10 . generate natlogsqrft = ln(sqrft)
+      
+    11 . 
+    12 . regress natlogprice natlogsqrft, robust
+      
+      Linear regression                               Number of obs     =         88
+                                                      F(1, 86)          =      79.25
+                                                      Prob > F          =     0.0000
+                                                      R-squared         =     0.5530
+                                                      Root MSE          =     .20414
+      
+      ------------------------------------------------------------------------------
+                   |               Robust
+       natlogprice | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+      -------------+----------------------------------------------------------------
+       natlogsqrft |   .8726595   .0980257     8.90   0.000     .6777909    1.067528
+             _cons |  -.9751299   .7446366    -1.31   0.194    -2.455418    .5051587
+      ------------------------------------------------------------------------------
+      
+    13 . 
+    14 . regress price natlogsqrft, robust
+      
+      Linear regression                               Number of obs     =         88
+                                                      F(1, 86)          =      44.71
+                                                      Prob > F          =     0.0000
+                                                      R-squared         =     0.5630
+                                                      Root MSE          =     68.297
+      
+      ------------------------------------------------------------------------------
+                   |               Robust
+             price | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+      -------------+----------------------------------------------------------------
+       natlogsqrft |   297.9113   44.55538     6.69   0.000     209.3381    386.4845
+             _cons |   -1962.42   334.4904    -5.87   0.000    -2627.365   -1297.475
+      ------------------------------------------------------------------------------
+      
+    15 . 
+    16 . regress natlogprice sqrft, robust
+      
+      Linear regression                               Number of obs     =         88
+                                                      F(1, 86)          =      93.56
+                                                      Prob > F          =     0.0000
+                                                      R-squared         =     0.5837
+                                                      Root MSE          =     .19701
+      
+      ------------------------------------------------------------------------------
+                   |               Robust
+       natlogprice | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+      -------------+----------------------------------------------------------------
+             sqrft |   .0004018   .0000415     9.67   0.000     .0003192    .0004844
+             _cons |    4.82403   .0869121    55.50   0.000     4.651254    4.996805
+      ------------------------------------------------------------------------------
+      
+    17 . 
+    18 . regress price sqrft, robust
+      
+      Linear regression                               Number of obs     =         88
+                                                      F(1, 86)          =      51.19
+                                                      Prob > F          =     0.0000
+                                                      R-squared         =     0.6208
+                                                      Root MSE          =     63.617
+      
+      ------------------------------------------------------------------------------
+                   |               Robust
+             price | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+      -------------+----------------------------------------------------------------
+             sqrft |    .140211   .0195978     7.15   0.000     .1012519      .17917
+             _cons |   11.20415   36.80591     0.30   0.762    -61.96359    84.37188
+      ------------------------------------------------------------------------------
+      
+    19 . 
+    20 . generate sqrdsqrft = (sqrft)^2
+      
+    21 . 
+    22 . regress price sqrft sqrdsqrft, robust 
+      
+      Linear regression                               Number of obs     =         88
+                                                      F(2, 85)          =      30.93
+                                                      Prob > F          =     0.0000
+                                                      R-squared         =     0.6408
+                                                      Root MSE          =     62.277
+      
+      ------------------------------------------------------------------------------
+                   |               Robust
+             price | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+      -------------+----------------------------------------------------------------
+             sqrft |  -.0171086   .0842332    -0.20   0.840    -.1845868    .1503697
+         sqrdsqrft |   .0000326   .0000196     1.67   0.099    -6.27e-06    .0000715
+             _cons |   184.9453   88.58007     2.09   0.040     8.824355    361.0662
+      ------------------------------------------------------------------------------
+      
+    23 . 
+    24 . display -(-(0.0171086) / (2 * 0.0000326))
+      262.40184
+      
+    25 . 
+    26 . test sqrft sqrdsqrft
+      
+       ( 1)  sqrft = 0
+       ( 2)  sqrdsqrft = 0
+      
+             F(  2,    85) =   30.93
+                  Prob > F =    0.0000
+      
+    27 . 
+    28 . regress sqrft sqrdsqrft, robust
+      
+      Linear regression                               Number of obs     =         88
+                                                      F(1, 86)          =     943.54
+                                                      Prob > F          =     0.0000
+                                                      R-squared         =     0.9750
+                                                      Root MSE          =      91.78
+      
+      ------------------------------------------------------------------------------
+                   |               Robust
+             sqrft | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+      -------------+----------------------------------------------------------------
+         sqrdsqrft |   .0002022   6.58e-06    30.72   0.000     .0001891    .0002153
+             _cons |   1127.111   27.01016    41.73   0.000     1073.416    1180.805
+      ------------------------------------------------------------------------------
+      
+    29 . 
+    30 . translate @Results Pset6.txt

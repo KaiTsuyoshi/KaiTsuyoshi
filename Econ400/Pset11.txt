@@ -1,0 +1,104 @@
+                                                       ___  ____  ____  ____  ____(R)
+                                                      /__    /   ____/   /   ____/   
+                                                     ___/   /   /___/   /   /___/    
+                                                       Statistics/Data analysis      
+      
+      
+     1 . do "/Users/kaitsuyoshi/Desktop/Econ400/p11dofile.do"
+      
+     2 . display "Kai Tsuyoshi"
+      Kai Tsuyoshi
+      
+     3 . 
+     4 . use https://users.ssc.wisc.edu/~mckelvey/ec400/murderpanel, clear
+      (Source: Wooldridge, 6th Edition)
+      
+     5 . 
+     6 . describe
+      
+      Contains data from https://users.ssc.wisc.edu/~mckelvey/ec400/murderpanel.dta
+       Observations:           153                  Source: Wooldridge, 6th Edition
+          Variables:             9                  28 Nov 2018 10:05
+      --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+      Variable      Storage   Display    Value
+          name         type    format    label      Variable label
+      --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+      stateid         long    %8.0g      scode      State identification code (numeric)
+      statename       str2    %9s                   State name (postal code)
+      year            float   %9.0g                 Year (87, 90, or 93)
+      mrdrte          float   %9.0g                 Murder rate (number per 100,000 of population)
+      exec            float   %9.0g                 Executions (number over past 3 years)
+      unem            float   %9.0g                 Annual unemployment rate
+      cmrdrte         float   %9.0g                 First differenced murder rate
+      cexec           float   %9.0g                 First differenced executions
+      cunem           float   %9.0g                 First differenced unemployment rate
+      --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+      Sorted by: 
+      
+     7 . 
+     8 . regress mrdrte exec unem, vce(cluster stateid)
+      
+      Linear regression                               Number of obs     =        153
+                                                      F(2, 50)          =      19.68
+                                                      Prob > F          =     0.0000
+                                                      R-squared         =     0.0623
+                                                      Root MSE          =     8.9612
+      
+                                     (Std. err. adjusted for 51 clusters in stateid)
+      ------------------------------------------------------------------------------
+                   |               Robust
+            mrdrte | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+      -------------+----------------------------------------------------------------
+              exec |   .1650227   .1498121     1.10   0.276    -.1358837     .465929
+              unem |   1.258905   .6332923     1.99   0.052    -.0130998     2.53091
+             _cons |    .348119   2.661369     0.13   0.896    -4.997397    5.693635
+      ------------------------------------------------------------------------------
+      
+     9 . 
+    10 . regress cmrdrte cexec cunem, vce(cluster stateid) noconstant
+      
+      Linear regression                               Number of obs     =        102
+                                                      F(2, 50)          =       5.54
+                                                      Prob > F          =     0.0067
+                                                      R-squared         =     0.0065
+                                                      Root MSE          =     4.3803
+      
+                                     (Std. err. adjusted for 51 clusters in stateid)
+      ------------------------------------------------------------------------------
+                   |               Robust
+           cmrdrte | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+      -------------+----------------------------------------------------------------
+             cexec |  -.1123983   .0352317    -3.19   0.002    -.1831633   -.0416333
+             cunem |  -.0482301   .1321896    -0.36   0.717    -.3137408    .2172806
+      ------------------------------------------------------------------------------
+      
+    11 . 
+    12 . xtreg mrdrte exec unem, fe i(stateid) vce(cluster stateid)
+      
+      Fixed-effects (within) regression               Number of obs     =        153
+      Group variable: stateid                         Number of groups  =         51
+      
+      R-squared:                                      Obs per group:
+           Within  = 0.0047                                         min =          3
+           Between = 0.0007                                         avg =        3.0
+           Overall = 0.0002                                         max =          3
+      
+                                                      F(2,50)           =       1.23
+      corr(u_i, Xb) = -0.0635                         Prob > F          =     0.3017
+      
+                                     (Std. err. adjusted for 51 clusters in stateid)
+      ------------------------------------------------------------------------------
+                   |               Robust
+            mrdrte | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+      -------------+----------------------------------------------------------------
+              exec |  -.1140743   .0811107    -1.41   0.166      -.27699    .0488414
+              unem |    .095914   .2652027     0.36   0.719    -.4367612    .6285893
+             _cons |   7.637844   1.609143     4.75   0.000     4.405786     10.8699
+      -------------+----------------------------------------------------------------
+           sigma_u |   8.788124
+           sigma_e |   3.612922
+               rho |  .85542114   (fraction of variance due to u_i)
+      ------------------------------------------------------------------------------
+      
+    13 . 
+    14 . translate @Results Pset11.txt

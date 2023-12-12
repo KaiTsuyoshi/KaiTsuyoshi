@@ -1,0 +1,176 @@
+                                                       ___  ____  ____  ____  ____(R)
+                                                      /__    /   ____/   /   ____/   
+                                                     ___/   /   /___/   /   /___/    
+                                                       Statistics/Data analysis      
+      
+      
+     1 . do "/Users/kaitsuyoshi/Desktop/Econ400/pset8dofile.do"
+      
+     2 . display "Kai Tsuyoshi"
+      Kai Tsuyoshi
+      
+     3 . 
+     4 . use https://users.ssc.wisc.edu/~mckelvey/ec400/murder93, clear
+      (Source: Wooldridge, 6th Edition)
+      
+     5 . 
+     6 . regress mrdrte exec, robust
+      
+      Linear regression                               Number of obs     =         51
+                                                      F(1, 49)          =       1.67
+                                                      Prob > F          =     0.2018
+                                                      R-squared         =     0.0035
+                                                      Root MSE          =     10.808
+      
+      ------------------------------------------------------------------------------
+                   |               Robust
+            mrdrte | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+      -------------+----------------------------------------------------------------
+              exec |   .1244465    .096195     1.29   0.202    -.0688646    .3177576
+             _cons |   8.532241   1.654065     5.16   0.000     5.208272    11.85621
+      ------------------------------------------------------------------------------
+      
+     7 . 
+     8 . predict mrdrtehat
+      (option xb assumed; fitted values)
+      
+     9 . 
+    10 . scatter mrdrte exec || line mrdrtehat exec
+      
+    11 . 
+    12 . regress mrdrte exec if mrdrte < 60, robust
+      
+      Linear regression                               Number of obs     =         50
+                                                      F(1, 48)          =      10.18
+                                                      Prob > F          =     0.0025
+                                                      R-squared         =     0.0739
+                                                      Root MSE          =     3.8737
+      
+      ------------------------------------------------------------------------------
+                   |               Robust
+            mrdrte | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+      -------------+----------------------------------------------------------------
+              exec |   .2119062   .0664227     3.19   0.003     .0783544    .3454581
+             _cons |    6.99295   .5734721    12.19   0.000     5.839907    8.145993
+      ------------------------------------------------------------------------------
+      
+    13 . 
+    14 . regress mrdrte exec if exec < 30, robust
+      
+      Linear regression                               Number of obs     =         50
+                                                      F(1, 48)          =       0.49
+                                                      Prob > F          =     0.4875
+                                                      R-squared         =     0.0025
+                                                      Root MSE          =     10.915
+      
+      ------------------------------------------------------------------------------
+                   |               Robust
+            mrdrte | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+      -------------+----------------------------------------------------------------
+              exec |   .2606639   .3725527     0.70   0.488    -.4884035    1.009731
+             _cons |   8.424189   1.834361     4.59   0.000      4.73596    12.11242
+      ------------------------------------------------------------------------------
+      
+    15 . 
+    16 . qreg mrdrte exec, vce(robust)
+      Iteration  1:  WLS sum of weighted deviations =  116.30688
+      
+      Iteration  1: sum of abs. weighted deviations =  116.67857
+      Iteration  2: sum of abs. weighted deviations =  113.37857
+      Iteration  3: sum of abs. weighted deviations =  111.99706
+      Iteration  4: sum of abs. weighted deviations =   111.9913
+      
+      Median regression                                   Number of obs =         51
+        Raw sum of deviations   117.65 (about 6.8000002)
+        Min sum of deviations 111.9913                    Pseudo R2     =     0.0481
+      
+      ------------------------------------------------------------------------------
+                   |               Robust
+            mrdrte | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+      -------------+----------------------------------------------------------------
+              exec |   .1565217   .8104254     0.19   0.848    -1.472089    1.785133
+             _cons |   6.578261   1.160854     5.67   0.000     4.245439    8.911084
+      ------------------------------------------------------------------------------
+      
+    17 . 
+    18 . regress mrdrte exec if state != "DC", robust
+      
+      Linear regression                               Number of obs     =         50
+                                                      F(1, 48)          =      10.18
+                                                      Prob > F          =     0.0025
+                                                      R-squared         =     0.0739
+                                                      Root MSE          =     3.8737
+      
+      ------------------------------------------------------------------------------
+                   |               Robust
+            mrdrte | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+      -------------+----------------------------------------------------------------
+              exec |   .2119062   .0664227     3.19   0.003     .0783544    .3454581
+             _cons |    6.99295   .5734721    12.19   0.000     5.839907    8.145993
+      ------------------------------------------------------------------------------
+      
+    19 . 
+    20 . use https://users.ssc.wisc.edu/~mckelvey/ec400/smoking, clear
+      (Source: Stock and Watson, Updated 3rd Edition)
+      
+    21 . 
+    22 . regress smoker age, robust
+      
+      Linear regression                               Number of obs     =     10,000
+                                                      F(1, 9998)        =      12.41
+                                                      Prob > F          =     0.0004
+                                                      R-squared         =     0.0012
+                                                      Root MSE          =     .42827
+      
+      ------------------------------------------------------------------------------
+                   |               Robust
+            smoker | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+      -------------+----------------------------------------------------------------
+               age |  -.0012088   .0003431    -3.52   0.000    -.0018814   -.0005362
+             _cons |   .2890714   .0141323    20.45   0.000     .2613693    .3167734
+      ------------------------------------------------------------------------------
+      
+    23 . 
+    24 . logit smoker age, robust
+      
+      Iteration 0:   log pseudolikelihood = -5537.1662  
+      Iteration 1:   log pseudolikelihood = -5531.2856  
+      Iteration 2:   log pseudolikelihood = -5531.2823  
+      Iteration 3:   log pseudolikelihood = -5531.2823  
+      
+      Logistic regression                                     Number of obs = 10,000
+                                                              Wald chi2(1)  =  12.11
+                                                              Prob > chi2   = 0.0005
+      Log pseudolikelihood = -5531.2823                       Pseudo R2     = 0.0011
+      
+      ------------------------------------------------------------------------------
+                   |               Robust
+            smoker | Coefficient  std. err.      z    P>|z|     [95% conf. interval]
+      -------------+----------------------------------------------------------------
+               age |  -.0066627   .0019145    -3.48   0.001     -.010415   -.0029104
+             _cons |  -.8839928   .0767918   -11.51   0.000    -1.034502   -.7334837
+      ------------------------------------------------------------------------------
+      
+    25 . 
+    26 . probit smoker age, robust
+      
+      Iteration 0:   log pseudolikelihood = -5537.1662  
+      Iteration 1:   log pseudolikelihood = -5531.2413  
+      Iteration 2:   log pseudolikelihood = -5531.2407  
+      Iteration 3:   log pseudolikelihood = -5531.2407  
+      
+      Probit regression                                       Number of obs = 10,000
+                                                              Wald chi2(1)  =  12.17
+                                                              Prob > chi2   = 0.0005
+      Log pseudolikelihood = -5531.2407                       Pseudo R2     = 0.0011
+      
+      ------------------------------------------------------------------------------
+                   |               Robust
+            smoker | Coefficient  std. err.      z    P>|z|     [95% conf. interval]
+      -------------+----------------------------------------------------------------
+               age |  -.0039336   .0011276    -3.49   0.000    -.0061436   -.0017237
+             _cons |   -.547524   .0454272   -12.05   0.000    -.6365597   -.4584883
+      ------------------------------------------------------------------------------
+      
+    27 . 
+    28 . translate @Results Pset8.txt

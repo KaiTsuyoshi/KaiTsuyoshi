@@ -1,0 +1,122 @@
+                                                       ___  ____  ____  ____  ____(R)
+                                                      /__    /   ____/   /   ____/   
+                                                     ___/   /   /___/   /   /___/    
+                                                       Statistics/Data analysis      
+      
+      
+     1 . do "/Users/kaitsuyoshi/Desktop/Econ400/p12dofile.do"
+      
+     2 . display "Kai Tsuyoshi"
+      Kai Tsuyoshi
+      
+     3 . 
+     4 . use https://users.ssc.wisc.edu/~mckelvey/ec400/wage2
+      (Source: Wooldridge, 6th Edition)
+      
+     5 . 
+     6 . describe
+      
+      Contains data from https://users.ssc.wisc.edu/~mckelvey/ec400/wage2.dta
+       Observations:           935                  Source: Wooldridge, 6th Edition
+          Variables:            17                  5 Dec 2018 10:32
+      -----------------------------------------------------------------------------------------------
+      Variable      Storage   Display    Value
+          name         type    format    label      Variable label
+      -----------------------------------------------------------------------------------------------
+      wage            float   %9.0g                 monthly earnings
+      hours           float   %9.0g                 average weekly hours
+      IQ              float   %9.0g                 IQ score
+      KWW             float   %9.0g                 knowledge of world work score
+      educ            float   %9.0g                 years of education
+      exper           float   %9.0g                 years of work experience
+      tenure          float   %9.0g                 years with current employer
+      age             float   %9.0g                 age in years
+      married         float   %9.0g                 =1 if married
+      black           float   %9.0g                 =1 if black
+      south           float   %9.0g                 =1 if live in south
+      urban           float   %9.0g                 =1 if live in SMSA
+      sibs            float   %9.0g                 number of siblings
+      brthord         float   %9.0g                 birth order
+      meduc           float   %9.0g                 mother's education
+      feduc           float   %9.0g                 father's education
+      lwage           float   %9.0g                 natural log of wage
+      -----------------------------------------------------------------------------------------------
+      Sorted by: 
+      
+     7 . 
+     8 . regress lwage educ sibs, robust
+      
+      Linear regression                               Number of obs     =        935
+                                                      F(2, 932)         =      54.60
+                                                      Prob > F          =     0.0000
+                                                      R-squared         =     0.1039
+                                                      Root MSE          =      .3991
+      
+      ------------------------------------------------------------------------------
+                   |               Robust
+             lwage | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+      -------------+----------------------------------------------------------------
+              educ |   .0560375   .0062961     8.90   0.000     .0436814    .0683936
+              sibs |  -.0151325   .0055187    -2.74   0.006     -.025963   -.0043021
+             _cons |   6.068773   .0912823    66.48   0.000      5.88963    6.247916
+      ------------------------------------------------------------------------------
+      
+     9 . 
+    10 . regress educ brthord, robust
+      
+      Linear regression                               Number of obs     =        852
+                                                      F(1, 850)         =      44.36
+                                                      Prob > F          =     0.0000
+                                                      R-squared         =     0.0420
+                                                      Root MSE          =     2.1546
+      
+      ------------------------------------------------------------------------------
+                   |               Robust
+              educ | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+      -------------+----------------------------------------------------------------
+           brthord |  -.2826441   .0424383    -6.66   0.000    -.3659403   -.1993479
+             _cons |   14.14945   .1280928   110.46   0.000     13.89803    14.40086
+      ------------------------------------------------------------------------------
+      
+    11 . 
+    12 . ivregress 2sls lwage (educ = brthord) sibs, first robust
+      
+      First-stage regressions
+      -----------------------
+      
+                                                              Number of obs =    852
+                                                              F(2, 849)     =  32.15
+                                                              Prob > F      = 0.0000
+                                                              R-squared     = 0.0583
+                                                              Adj R-squared = 0.0561
+                                                              Root MSE      = 2.1374
+      
+      ------------------------------------------------------------------------------
+                   |               Robust
+              educ | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+      -------------+----------------------------------------------------------------
+              sibs |  -.1528673   .0391248    -3.91   0.000      -.22966   -.0760745
+           brthord |  -.1526742   .0554352    -2.75   0.006    -.2614804    -.043868
+             _cons |    14.2965   .1324569   107.93   0.000     14.03652    14.55648
+      ------------------------------------------------------------------------------
+      
+      
+      Instrumental variables 2SLS regression            Number of obs   =        852
+                                                        Wald chi2(2)    =      24.83
+                                                        Prob > chi2     =     0.0000
+                                                        R-squared       =          .
+                                                        Root MSE        =     .42623
+      
+      ------------------------------------------------------------------------------
+                   |               Robust
+             lwage | Coefficient  std. err.      z    P>|z|     [95% conf. interval]
+      -------------+----------------------------------------------------------------
+              educ |    .136994   .0766359     1.79   0.074    -.0132096    .2871976
+              sibs |   .0021107   .0179424     0.12   0.906    -.0330557    .0372771
+             _cons |   4.938529   1.084886     4.55   0.000     2.812192    7.064865
+      ------------------------------------------------------------------------------
+      Instrumented: educ
+       Instruments: sibs brthord
+      
+    13 . 
+    14 . translate @Results Pset12.txt

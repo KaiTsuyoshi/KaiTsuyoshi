@@ -1,0 +1,123 @@
+                                                       ___  ____  ____  ____  ____(R)
+                                                      /__    /   ____/   /   ____/   
+                                                     ___/   /   /___/   /   /___/    
+                                                       Statistics/Data analysis      
+      
+      
+     1 . do "/Users/kaitsuyoshi/Desktop/Econ400/pset7dofile.do"
+      
+     2 . display "Kai Tsuyoshi"
+      Kai Tsuyoshi
+      
+     3 . 
+     4 . use https://users.ssc.wisc.edu/~mckelvey/ec400/smoke, clear
+      (Source: Wooldridge, 6th Edition)
+      
+     5 . 
+     6 . describe
+      
+      Contains data from https://users.ssc.wisc.edu/~mckelvey/ec400/smoke.dta
+       Observations:           807                  Source: Wooldridge, 6th Edition
+          Variables:             7                  16 Oct 2018 17:50
+      -----------------------------------------------------------------------------------------------
+      Variable      Storage   Display    Value
+          name         type    format    label      Variable label
+      -----------------------------------------------------------------------------------------------
+      educ            float   %9.0g                 years of schooling
+      cigpric         float   %9.0g                 state cigarette price (cents per pack)
+      white           float   %9.0g                 =1 if white
+      age             float   %9.0g                 age (in years)
+      income          float   %9.0g                 annual income (in dollars)
+      cigs            float   %9.0g                 cigs smoked per day
+      restaurn        float   %9.0g                 =1 if state restaurant smoking restrictions
+      -----------------------------------------------------------------------------------------------
+      Sorted by: 
+      
+     7 . 
+     8 . regress cigs income restaurn, robust
+      
+      Linear regression                               Number of obs     =        807
+                                                      F(2, 804)         =       4.94
+                                                      Prob > F          =     0.0074
+                                                      R-squared         =     0.0115
+                                                      Root MSE          =     13.659
+      
+      ------------------------------------------------------------------------------
+                   |               Robust
+              cigs | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+      -------------+----------------------------------------------------------------
+            income |   .0000948   .0000503     1.88   0.060    -3.95e-06    .0001935
+          restaurn |  -2.985036   1.040161    -2.87   0.004    -5.026789   -.9432844
+             _cons |   7.592682   .9945698     7.63   0.000     5.640422    9.544941
+      ------------------------------------------------------------------------------
+      
+     9 . 
+    10 . test restaurn
+      
+       ( 1)  restaurn = 0
+      
+             F(  1,   804) =    8.24
+                  Prob > F =    0.0042
+      
+    11 . 
+    12 . generate inc_rest =  income * restaurn
+      
+    13 . 
+    14 . regress cigs income restaurn inc_rest, robust
+      
+      Linear regression                               Number of obs     =        807
+                                                      F(3, 803)         =       3.38
+                                                      Prob > F          =     0.0179
+                                                      R-squared         =     0.0126
+                                                      Root MSE          =      13.66
+      
+      ------------------------------------------------------------------------------
+                   |               Robust
+              cigs | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+      -------------+----------------------------------------------------------------
+            income |    .000123   .0000617     1.99   0.046     1.96e-06     .000244
+          restaurn |  -.5704886   2.157848    -0.26   0.792    -4.806177      3.6652
+          inc_rest |   -.000118   .0000983    -1.20   0.230    -.0003109    .0000749
+             _cons |    7.06389   1.167487     6.05   0.000     4.772203    9.355577
+      ------------------------------------------------------------------------------
+      
+    15 . 
+    16 . test inc_rest
+      
+       ( 1)  inc_rest = 0
+      
+             F(  1,   803) =    1.44
+                  Prob > F =    0.2301
+      
+    17 . 
+    18 . use https://users.ssc.wisc.edu/~mckelvey/ec400/hprice, clear
+      (Source: Wooldridge, 6th Edition)
+      
+    19 . 
+    20 . generate sqrftxbdrms = sqrft * bdrms
+      
+    21 . 
+    22 . regress price sqrft bdrms sqrftxbdrms, robust
+      
+      Linear regression                               Number of obs     =         88
+                                                      F(3, 84)          =      23.92
+                                                      Prob > F          =     0.0000
+                                                      R-squared         =     0.6539
+                                                      Root MSE          =     61.498
+      
+      ------------------------------------------------------------------------------
+                   |               Robust
+             price | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+      -------------+----------------------------------------------------------------
+             sqrft |   .0326205   .0663267     0.49   0.624    -.0992774    .1645184
+             bdrms |  -35.95534   35.39283    -1.02   0.313    -106.3379    34.42718
+       sqrftxbdrms |    .023448   .0175436     1.34   0.185    -.0114393    .0583353
+             _cons |   181.6908   125.3662     1.45   0.151    -67.61369    430.9953
+      ------------------------------------------------------------------------------
+      
+    23 . 
+    24 . display -35.95534 + (.023448 * 2200)
+      15.63026
+      
+    25 . 
+    26 . translate @Results Pset7.txt

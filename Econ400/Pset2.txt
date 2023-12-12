@@ -1,0 +1,97 @@
+                                                       ___  ____  ____  ____  ____(R)
+                                                      /__    /   ____/   /   ____/   
+                                                     ___/   /   /___/   /   /___/    
+                                                       Statistics/Data analysis      
+      
+      
+     1 . do "/var/folders/qx/w74_v_mx4xxfmcnj1kx6_g380000gn/T//SD01280.000000"
+      
+     2 . display "Kai Tsuyoshi"
+      Kai Tsuyoshi
+      
+     3 . 
+     4 . use https://users.ssc.wisc.edu/~mckelvey/ec400/collegedistance, clear
+      (Source: Stock and Watson, Updated 3rd Edition)
+      
+     5 . 
+     6 . describe
+      
+      Contains data from https://users.ssc.wisc.edu/~mckelvey/ec400/collegedistance.dta
+       Observations:         3,796                  Source: Stock and Watson, Updated 3rd Edition
+          Variables:            14                  9 Sep 2018 08:14
+      -----------------------------------------------------------------------------------------------
+      Variable      Storage   Display    Value
+          name         type    format    label      Variable label
+      -----------------------------------------------------------------------------------------------
+      female          float   %9.0g                 1 = Female / 0 = Otherwise
+      black           float   %9.0g                 1 = Black / 0 = Otherwise
+      hispanic        float   %9.0g                 1 = Hispanic / 0 = Otherwise
+      bytest          float   %9.0g                 Base Year Test Score
+      dadcoll         float   %9.0g                 1 = Father is a College Grad / 0 = Otherwise
+      momcoll         float   %9.0g                 1 = Mother is a College Grad / 0 = Otherwise
+      ownhome         float   %9.0g                 1 = Family Owns Home / 0 = Otherwise
+      urban           float   %9.0g                 1 = School in Urban Area / 0 = Otherwise
+      cue80           float   %9.0g                 County Unempolyment Rate in 1980
+      stwmfg80        float   %9.0g                 State Hourly Wage in Manufacturing in 1980
+      dist            float   %9.0g                 Distance to 4yr College in 10's of miles
+      tuition         float   %9.0g                 Avg State 4yr College Tuition in $1000's
+      incomehi        float   %9.0g                 1 = Family Income > $25000 per year / 0 =
+                                                      Otherwise
+      ed              float   %9.0g                 Years of Education Completed
+      -----------------------------------------------------------------------------------------------
+      Sorted by: 
+      
+     7 . 
+     8 . regress ed dist
+      
+            Source |       SS           df       MS      Number of obs   =     3,796
+      -------------+----------------------------------   F(1, 3794)      =     28.48
+             Model |  93.0256754         1  93.0256754   Prob > F        =    0.0000
+          Residual |  12394.3568     3,794    3.266831   R-squared       =    0.0074
+      -------------+----------------------------------   Adj R-squared   =    0.0072
+             Total |  12487.3825     3,795  3.29048287   Root MSE        =    1.8074
+      
+      ------------------------------------------------------------------------------
+                ed | Coefficient  Std. err.      t    P>|t|     [95% conf. interval]
+      -------------+----------------------------------------------------------------
+              dist |  -.0733727   .0137498    -5.34   0.000    -.1003304    -.046415
+             _cons |   13.95586   .0377241   369.95   0.000     13.88189    14.02982
+      ------------------------------------------------------------------------------
+      
+     9 . 
+    10 . generate dist100 = dist / 10
+      
+    11 . 
+    12 . regress ed dist100
+      
+            Source |       SS           df       MS      Number of obs   =     3,796
+      -------------+----------------------------------   F(1, 3794)      =     28.48
+             Model |   93.025674         1   93.025674   Prob > F        =    0.0000
+          Residual |  12394.3568     3,794  3.26683101   R-squared       =    0.0074
+      -------------+----------------------------------   Adj R-squared   =    0.0072
+             Total |  12487.3825     3,795  3.29048287   Root MSE        =    1.8074
+      
+      ------------------------------------------------------------------------------
+                ed | Coefficient  Std. err.      t    P>|t|     [95% conf. interval]
+      -------------+----------------------------------------------------------------
+           dist100 |  -.7337271    .137498    -5.34   0.000    -1.003304   -.4641499
+             _cons |   13.95586   .0377241   369.95   0.000     13.88189    14.02982
+      ------------------------------------------------------------------------------
+      
+    13 . 
+    14 . predict edhat
+      (option xb assumed; fitted values)
+      
+    15 . 
+    16 . scatter ed dist100 || line edhat dist100
+      
+    17 . 
+    18 . 
+    19 . 
+    20 . display  -.7337271 * 2000 + 13.95586 
+      -1453.4983
+      
+    21 . 
+      end of do-file
+      
+    22 . translate @Results Pset2.txt
